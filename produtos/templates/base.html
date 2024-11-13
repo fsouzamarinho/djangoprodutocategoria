@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
 <body>
+    <div class="navbar">
+        <a href="{% url 'produto_list' %}">Produtos</a>
+        <a href="{% url 'categoria_list' %}">Categoria</a>
+        <a href="{% url 'movimentacao_list' %}">Movimentação</a>
+        {% if user.is_authenticated %}
+            <div class="navbar-right">
+                <a href="{% url 'profile' %}">Perfil</a>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: white; cursor: pointer; padding: 14px 16px;">
+                        Logout
+                    </button>
+                </form>
+                
+            </div>
+        {% else %}
+            <div class="navbar-right">
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+        {% endif %}
+    </div>
+
     {% block content %}{% endblock%}
 </body>
 </html>

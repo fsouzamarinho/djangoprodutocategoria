@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from produtos.forms import CategoriaForm, ProdutoForm
 from .models import Produto, Categoria
@@ -9,6 +10,7 @@ from .models import Produto, Categoria
 class CategoriaListView(ListView):
     model = Categoria
     template_name = 'categoria_list.html'
+
 
 class CategoriaCreateView(CreateView):
     model = Categoria
@@ -28,9 +30,10 @@ class CategoriaDeleteView(DeleteView):
     success_url = reverse_lazy('categoria_list')
 
 # CBVs para Produto
-class ProdutoListView(ListView):
+class ProdutoListView(LoginRequiredMixin, ListView):
     model = Produto
     template_name = 'produto_list.html'
+    login_url = 'login'
 
 class ProdutoCreateView(CreateView):
     model = Produto
